@@ -2,4 +2,7 @@
     <string name="app_name">Popular Movies</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!-- Image Description for disability Users -->
+    <string name="poster_description">Poster</string>
+
 </resources>
