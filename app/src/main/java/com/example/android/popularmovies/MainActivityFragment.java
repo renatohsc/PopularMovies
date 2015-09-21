@@ -77,7 +77,7 @@ public class MainActivityFragment extends Fragment {
     private void updateMovies() {
 
 
-        Log.v(LOG_TAG, "Maldicao executavel 2");
+       // Log.v(LOG_TAG, "Maldicao executavel 2");
 
 
 
@@ -87,7 +87,7 @@ public class MainActivityFragment extends Fragment {
                 getString(R.string.pref_sort_key),
                 getString(R.string.pref_sort_pop));
 
-        Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
+       // Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
 
 
 
@@ -105,7 +105,7 @@ public class MainActivityFragment extends Fragment {
 
         super.onStart();
 
-        Log.v(LOG_TAG, "Maldicao executavel 1");
+       // Log.v(LOG_TAG, "Maldicao executavel 1");
 
         updateMovies();
 
@@ -122,7 +122,7 @@ public class MainActivityFragment extends Fragment {
 
         private String[][] getMovieDataFromJson(String movieJsonStr)
                 throws JSONException {
-            Log.v(LOG_TAG, "Maldicao executavel 5");
+          //  Log.v(LOG_TAG, "Maldicao executavel 5");
 
 
             // These are the names of the JSON objects that need to be extracted.
@@ -193,7 +193,7 @@ public class MainActivityFragment extends Fragment {
 
             String api_key = getActivity().getResources().getString(R.string.api_key);
 
-            Log.v(LOG_TAG, "Maldicao executavel 6" + sortCrit);
+           // Log.v(LOG_TAG, "Maldicao executavel 6" + sortCrit);
 
 
             try {
@@ -216,7 +216,7 @@ public class MainActivityFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+              //  Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
 
                 // Create the request to The Movie Database, and open the connection
@@ -248,7 +248,7 @@ public class MainActivityFragment extends Fragment {
                 movieJsonStr = buffer.toString();
 
                 //VERBOSE LOG
-                 Log.v(LOG_TAG, "Forecast Json String" + movieJsonStr);
+             //    Log.v(LOG_TAG, "Forecast Json String" + movieJsonStr);
 
 
             } catch (IOException e) {
@@ -282,7 +282,7 @@ public class MainActivityFragment extends Fragment {
 
         }
         protected void onPostExecute(final String[][] result) {
-            Log.v(LOG_TAG, "Maldicao executavel 8");
+          //  Log.v(LOG_TAG, "Maldicao executavel 8");
 
             if (result != null) {
 

@@ -45,8 +45,8 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-
-        String sizeImage = "w185";
+        String sizeImage = getApplicationContext().getResources().getString(R.string.size_image);
+        //String sizeImage = "w185";
         if(posterMovie != null) {
             String posterUrl = "http://image.tmdb.org/t/p/" + sizeImage + "/" + posterMovie;
            // Log.v(LOG_TAG, "poster url : " + posterUrl);

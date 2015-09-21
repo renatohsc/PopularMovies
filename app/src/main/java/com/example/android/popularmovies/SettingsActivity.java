@@ -1,13 +1,11 @@
 package com.example.android.popularmovies;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 /**
  * Created by Renato Henrique on 14/09/2015.
@@ -81,14 +79,14 @@ public class SettingsActivity extends PreferenceActivity
 
 
 
-        String msg = "Cur Values: " + "\n sortOrder = " + sortOrder;
+      //  String msg = "Cur Values: " + "\n sortOrder = " + sortOrder;
 
 
-        Context context = getApplicationContext();
+       // Context context = getApplicationContext();
     //    CharSequence textToast = msg;
 
 
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
 //        Toast toast = Toast.makeText(context, textToast, duration);
 //        toast.show();
