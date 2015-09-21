@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+        <!-- green material primary -->
+        <color name="custom_teal">#009688</color>
+
+        <!-- green material primary dark -->
+        <color name="custom_teal_dark">#00796B</color>
+
+        <!-- red accent -->
+        <color name="custom_red">#FF1744</color>
+
+
+
+</resources>

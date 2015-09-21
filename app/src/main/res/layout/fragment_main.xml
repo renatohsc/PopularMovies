@@ -10,7 +10,7 @@
 
     <GridView
 
-        android:id="@+id/gridview"
+        android:id="@+id/gridview_movie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/activity_width_grid"

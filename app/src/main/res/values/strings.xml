@@ -1,8 +1,35 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="general_settings">General Settings</string>
     <!-- Image Description for disability Users -->
     <string name="poster_description">Poster</string>
+    <!-- Menu Items -->
+    <string name="pref_sort_label">Sort Criteria</string>
+    <string name="pref_sort_label_popular">Popular Movies</string>
+    <string name="pref_sort_label_highest">Highest Rated</string>
+
+    <string name="pref_sort_summary">Please select the order for movies</string>
+
+
+    <!--  key name on SharedPreferences -->
+
+    <string name="pref_sort_key" translatable="false">sortcriteria</string>
+    <string name="pref_sort_pop">popularity.desc</string>
+    <string name="pref_sort_high">vote_average.desc</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_detail">DetailActivity</string>
+
+<!-- TODO - Add your api key here -->
+    <string name="api_key" translatable="false">nononon</string>
+
+
+    <!-- size picasso -->
+    <string name="size_image">w185</string>
+
 
 </resources>
