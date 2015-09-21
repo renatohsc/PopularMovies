@@ -12,6 +12,7 @@
         <!-- red accent -->
         <color name="custom_red">#FF1744</color>
 
-
+        <!-- lighter red -->
+        <color name="custom_red_lighter">#EF5350</color>
 
 </resources>

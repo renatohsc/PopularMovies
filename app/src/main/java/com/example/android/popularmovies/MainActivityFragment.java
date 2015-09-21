@@ -298,12 +298,12 @@ public class MainActivityFragment extends Fragment {
                         //       Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
                         MovieMinutia movie = movieList.get(position);
 
-                        Intent sendIntent = new Intent(getActivity(), DetailActivity.class);
-                             //  putExtra(Intent.TITLE_KEY, movie.titleMovie).
-                             //  putExtra(Intent.POSTER_KEY, movie.posterMovie).
-                             //  putExtra(Intent.OVERVIEW_KEY, movie.plotMovie).
-                             //  putExtra(Intent.RELEASE_DATE_KEY, movie.releaseDate).
-                             //  putExtra(Intent.VOTES_KEY, movie.ratingMovie);
+                        Intent sendIntent = new Intent(getActivity(), DetailActivity.class).
+                                 putExtra(DetailActivity.TITLE_KEY, movie.titleMovie).
+                                 putExtra(DetailActivity.POSTER_KEY, movie.posterMovie).
+                                 putExtra(DetailActivity.RELEASE_KEY, movie.releaseDate).
+                                 putExtra(DetailActivity.RATING_KEY, movie.ratingMovie).
+                                 putExtra(DetailActivity.PLOT_KEY, movie.plotMovie);
                                  startActivity(sendIntent);
 
 

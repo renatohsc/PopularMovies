@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -78,7 +77,7 @@ public class SettingsActivity extends PreferenceActivity
     private void checkValues() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String sortOrder = sharedPrefs.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_pop));
-                String sortDesc =  sharedPrefs.getString(getString(R.string.pref_sort_label), getString(R.string.pref_sort_label_popular));
+               // String sortDesc =  sharedPrefs.getString(getString(R.string.pref_sort_label), getString(R.string.pref_sort_label_popular));
 
 
 
@@ -86,11 +85,13 @@ public class SettingsActivity extends PreferenceActivity
 
 
         Context context = getApplicationContext();
-        CharSequence text = msg;
-        int duration = Toast.LENGTH_SHORT;
+    //    CharSequence textToast = msg;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+//        Toast toast = Toast.makeText(context, textToast, duration);
+//        toast.show();
 
 
     }
@@ -98,15 +99,15 @@ public class SettingsActivity extends PreferenceActivity
 
 
 
-        private void bindPreferenceSummaryToValue(Preference preference) {
-            // Set the listener to watch for value changes.
-
-            ListPreference lp = (ListPreference)preference;
-            lp.setSummary("dummy"); // required or will not update
-
-            lp.setSummary(" %s");
-
-        }
+//        private void bindPreferenceSummaryToValue(Preference preference) {
+//            // Set the listener to watch for value changes.
+//
+//            ListPreference lp = (ListPreference)preference;
+//            lp.setSummary("dummy"); // required or will not update
+//
+//            lp.setSummary(" %s");
+//
+//        }
 
 
 
