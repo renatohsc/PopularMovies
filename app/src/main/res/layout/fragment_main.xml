@@ -22,4 +22,30 @@
 
        />
 
+
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+
+     />
+
+    <TextView
+
+        android:id="@+id/text_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textColor="@color/custom_red"
+        android:textStyle="italic"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/activity_vertical_height" />
+
+
+
 </FrameLayout>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -40,6 +44,15 @@ public class MainActivityFragment extends Fragment {
     public  ArrayList<MovieMinutia> movieList;
 
     MovieMinutia[] movies;
+
+    // Loadind progress
+    private static final int PROGRESS = 0x1;
+    private ProgressBar mProgress;
+    private int mProgressStatus = 0;
+
+    private TextView textProgress;
+
+    private Handler mHandler = new Handler();
 
 
 
@@ -69,6 +82,7 @@ public class MainActivityFragment extends Fragment {
 
 
 
+
         return rootView;
 
     }
@@ -90,6 +104,47 @@ public class MainActivityFragment extends Fragment {
        // Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
 
 
+        mProgress = (ProgressBar) getActivity().findViewById(R.id.progress_loading);
+
+        mProgress.setVisibility(View.VISIBLE);
+
+        textProgress = (TextView) getActivity().findViewById(R.id.text_loading);
+
+        textProgress.setVisibility(View.VISIBLE);
+
+
+        gridMovie.setVisibility(View.GONE);
+
+
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus += 1;
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                            textProgress.setText(mProgressStatus+"/"+mProgress.getMax());
+
+                        }
+                    });
+
+                    try {
+                        // Sleep for 200 milliseconds.
+                        //Just to display the progress slowly
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+                }
+            }
+        }).start();
 
 
         fetchMoviesTask moviesTask = new fetchMoviesTask();
@@ -287,6 +342,9 @@ public class MainActivityFragment extends Fragment {
             if (result != null) {
 
                 final MovieMinutiaAdapter mMovieMinutiaAdapter = new MovieMinutiaAdapter(getActivity(),movieList);
+                mProgress.setVisibility(View.GONE);
+                textProgress.setVisibility(View.GONE);
+                gridMovie.setVisibility(View.VISIBLE);
                 gridMovie.setAdapter(mMovieMinutiaAdapter);
 
 
