@@ -25,7 +25,7 @@
     <string name="title_activity_detail">DetailActivity</string>
 
 <!-- TODO - Add your api key here -->
-    <string name="api_key" translatable="false">nonononon</string>
+    <string name="api_key" translatable="false">3120236c5d0261a9cad9dc2ba2ae5dc9</string>
 
 
     <!-- size picasso -->

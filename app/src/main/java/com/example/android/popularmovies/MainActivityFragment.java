@@ -60,6 +60,7 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+
     }
 
     public MainActivityFragment() {
@@ -101,7 +102,17 @@ public class MainActivityFragment extends Fragment {
                 getString(R.string.pref_sort_key),
                 getString(R.string.pref_sort_pop));
 
-       // Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
+        String sortLabel = " " ;
+        if (sortOrder == getString(R.string.pref_sort_high)) {
+            sortLabel = getString(R.string.pref_sort_label_highest);
+        }
+            else {
+            sortLabel = getString(R.string.pref_sort_label_popular);
+        }
+
+        getActivity().setTitle(sortLabel);
+
+        // Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
 
 
         mProgress = (ProgressBar) getActivity().findViewById(R.id.progress_loading);
@@ -147,7 +158,7 @@ public class MainActivityFragment extends Fragment {
         }).start();
 
 
-        fetchMoviesTask moviesTask = new fetchMoviesTask();
+        FetchMovieTask moviesTask = new FetchMovieTask();
         moviesTask.execute(sortOrder);
 
 
@@ -166,18 +177,17 @@ public class MainActivityFragment extends Fragment {
 
     }
 
+    public class FetchMovieTask extends AsyncTask<String, Void, String[][]> {
 
-    public class fetchMoviesTask extends AsyncTask<String, Void, String[][]>
 
-    {
-        private final String LOG_TAG = fetchMoviesTask.class.getSimpleName();
+        private final String LOG_TAG = FetchMovieTask.class.getSimpleName();
 
 
 
 
         private String[][] getMovieDataFromJson(String movieJsonStr)
                 throws JSONException {
-          //  Log.v(LOG_TAG, "Maldicao executavel 5");
+            //  Log.v(LOG_TAG, "Maldicao executavel 5");
 
 
             // These are the names of the JSON objects that need to be extracted.
@@ -187,7 +197,8 @@ public class MainActivityFragment extends Fragment {
             final String TMD_PLOT = "overview";
             final String TMD_RELEASE = "release_date";
             final String TMD_RATING = "vote_average";
-
+            final String TMD_TRAILERS = "movietrailers";
+            final String TMD_REVIEWS  = "moviereviews";
 
 
 
@@ -246,9 +257,11 @@ public class MainActivityFragment extends Fragment {
             String sortCrit = params[0];
             String sortCountry = "US";
 
+
+
             String api_key = getActivity().getResources().getString(R.string.api_key);
 
-           // Log.v(LOG_TAG, "Maldicao executavel 6" + sortCrit);
+            // Log.v(LOG_TAG, "Maldicao executavel 6" + sortCrit);
 
 
             try {
@@ -271,7 +284,7 @@ public class MainActivityFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-              //  Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+                //  Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
 
                 // Create the request to The Movie Database, and open the connection
@@ -303,7 +316,7 @@ public class MainActivityFragment extends Fragment {
                 movieJsonStr = buffer.toString();
 
                 //VERBOSE LOG
-             //    Log.v(LOG_TAG, "Forecast Json String" + movieJsonStr);
+                //    Log.v(LOG_TAG, "Forecast Json String" + movieJsonStr);
 
 
             } catch (IOException e) {
@@ -337,7 +350,7 @@ public class MainActivityFragment extends Fragment {
 
         }
         protected void onPostExecute(final String[][] result) {
-          //  Log.v(LOG_TAG, "Maldicao executavel 8");
+            //  Log.v(LOG_TAG, "Maldicao executavel 8");
 
             if (result != null) {
 
@@ -357,12 +370,12 @@ public class MainActivityFragment extends Fragment {
                         MovieMinutia movie = movieList.get(position);
 
                         Intent sendIntent = new Intent(getActivity(), DetailActivity.class).
-                                 putExtra(DetailActivity.TITLE_KEY, movie.titleMovie).
-                                 putExtra(DetailActivity.POSTER_KEY, movie.posterMovie).
-                                 putExtra(DetailActivity.RELEASE_KEY, movie.releaseDate).
-                                 putExtra(DetailActivity.RATING_KEY, movie.ratingMovie).
-                                 putExtra(DetailActivity.PLOT_KEY, movie.plotMovie);
-                                 startActivity(sendIntent);
+                                putExtra(DetailActivity.TITLE_KEY, movie.titleMovie).
+                                putExtra(DetailActivity.POSTER_KEY, movie.posterMovie).
+                                putExtra(DetailActivity.RELEASE_KEY, movie.releaseDate).
+                                putExtra(DetailActivity.RATING_KEY, movie.ratingMovie).
+                                putExtra(DetailActivity.PLOT_KEY, movie.plotMovie);
+                        startActivity(sendIntent);
 
 
 
@@ -376,13 +389,16 @@ public class MainActivityFragment extends Fragment {
 
 
 
+            }
+
         }
-
     }
+
 }
 
 
-}
+
+
 
 
 

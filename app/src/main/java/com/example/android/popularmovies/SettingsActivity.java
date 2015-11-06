@@ -66,6 +66,7 @@ public class SettingsActivity extends PreferenceActivity
             lp.setSummary("dummy");
             lp.setSummary(" %s");
 
+
         }
 
 
