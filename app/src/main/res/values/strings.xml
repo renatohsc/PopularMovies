@@ -14,6 +14,13 @@
 
     <string name="pref_sort_summary">Please select the order for movies</string>
 
+    <!-- Review Items -->
+    <string name="review_author">Author</string>
+    <string name="review_content">Content</string>
+    <string name="trailer_text">Trailer</string>
+    <string name="show_reviews">Show Reviews</string>
+    <string name="movietrailer">Movie trailers</string>
+
 
     <!--  key name on SharedPreferences -->
 

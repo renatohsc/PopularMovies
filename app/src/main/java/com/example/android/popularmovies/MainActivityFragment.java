@@ -54,12 +54,23 @@ public class MainActivityFragment extends Fragment {
 
     private Handler mHandler = new Handler();
 
+    private Callback mCallback;
 
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        void onItemSelected(int position, int id, String title, String poster,
+                                   String release, String rating, String plot);
+
+        void onFirstItem(int position, int id, String title, String poster,
+                               String release, String rating, String plot);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
+//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
     }
 
@@ -98,21 +109,31 @@ public class MainActivityFragment extends Fragment {
 
         SharedPreferences sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortOrder = sharedPrefs.getString(
+
+        String sortOrder  = sharedPrefs.getString(
                 getString(R.string.pref_sort_key),
                 getString(R.string.pref_sort_pop));
 
         String sortLabel = " " ;
+
+
         if (sortOrder == getString(R.string.pref_sort_high)) {
             sortLabel = getString(R.string.pref_sort_label_highest);
+            Log.v(LOG_TAG, "Maldicao executavel 10");
         }
             else {
+            Log.v(LOG_TAG, "Maldicao executavel 20");
             sortLabel = getString(R.string.pref_sort_label_popular);
         }
 
+
         getActivity().setTitle(sortLabel);
 
-        // Log.v(LOG_TAG, "Maldicao executavel 3" + sortOrder);
+         Log.v(LOG_TAG, "Maldicao executavel 1" + sortOrder);
+
+         Log.v(LOG_TAG, "Maldicao executavel 2" + getString(R.string.pref_sort_high));
+
+         Log.v(LOG_TAG, "Maldicao executavel 3" + sortLabel);
 
 
         mProgress = (ProgressBar) getActivity().findViewById(R.id.progress_loading);
@@ -191,14 +212,15 @@ public class MainActivityFragment extends Fragment {
 
 
             // These are the names of the JSON objects that need to be extracted.
+            final String TMD_ID = "id";
             final String TMD_LIST = "results";
             final String TMD_TITLE = "original_title";
             final String TMD_POSTER = "poster_path";
             final String TMD_PLOT = "overview";
             final String TMD_RELEASE = "release_date";
             final String TMD_RATING = "vote_average";
-            final String TMD_TRAILERS = "movietrailers";
-            final String TMD_REVIEWS  = "moviereviews";
+
+            boolean favMovies = false;
 
 
 
@@ -207,7 +229,7 @@ public class MainActivityFragment extends Fragment {
 
 
 
-            String[][] resultStrs = new String[movieArray.length()][5];
+            String[][] resultStrs = new String[movieArray.length()][6];
             movies = new MovieMinutia[movieArray.length()];
             for(int i = 0; i < movieArray.length(); i++) {
                 int k = 0;
@@ -217,16 +239,20 @@ public class MainActivityFragment extends Fragment {
                 // Get the JSON object representing the day
                 JSONObject movieData = movieArray.getJSONObject(i);
                 movies[i] = new MovieMinutia(
+                        movieData.getInt(TMD_ID),
                         movieData.getString(TMD_TITLE),
                         movieData.getString(TMD_POSTER),
                         movieData.getString(TMD_RELEASE),
                         movieData.getString(TMD_RATING),
                         movieData.getString(TMD_PLOT));
-                resultStrs[i][k] = movieData.getString(TMD_TITLE);
+
+                resultStrs[i][k+5] = Integer.toString(movieData.getInt(TMD_ID));
+                resultStrs[i][k] =   movieData.getString(TMD_TITLE);
                 resultStrs[i][k+1] = movieData.getString(TMD_POSTER);
                 resultStrs[i][k+3] = movieData.getString(TMD_RELEASE);
                 resultStrs[i][k+4] = movieData.getString(TMD_RATING);
                 resultStrs[i][k+2] = movieData.getString(TMD_PLOT);
+
 
 
             }
@@ -256,6 +282,7 @@ public class MainActivityFragment extends Fragment {
 
             String sortCrit = params[0];
             String sortCountry = "US";
+            String sortCount = "10";
 
 
 
@@ -275,8 +302,11 @@ public class MainActivityFragment extends Fragment {
                 final String API_PARAM = "api_key";
                 final String COUNTRY_PARAM = "certification_country";
 
+                final String VOTECOUNT_PARAM = "vote_count.gte";
+
                 Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
                         .appendQueryParameter(COUNTRY_PARAM, sortCountry)
+                        .appendQueryParameter(VOTECOUNT_PARAM, sortCount)
                         .appendQueryParameter(SORT_PARAM, sortCrit)
                         .appendQueryParameter(API_PARAM, api_key)
                         .build();
@@ -369,14 +399,17 @@ public class MainActivityFragment extends Fragment {
                         //       Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
                         MovieMinutia movie = movieList.get(position);
 
-                        Intent sendIntent = new Intent(getActivity(), DetailActivity.class).
-                                putExtra(DetailActivity.TITLE_KEY, movie.titleMovie).
-                                putExtra(DetailActivity.POSTER_KEY, movie.posterMovie).
-                                putExtra(DetailActivity.RELEASE_KEY, movie.releaseDate).
-                                putExtra(DetailActivity.RATING_KEY, movie.ratingMovie).
-                                putExtra(DetailActivity.PLOT_KEY, movie.plotMovie);
-                        startActivity(sendIntent);
 
+
+
+                        Intent sendIntent = new Intent(getActivity(), DetailActivity.class).
+                                putExtra(DetailActivityFragment.ID_KEY, movie.idMovie).
+                                putExtra(DetailActivityFragment.TITLE_KEY, movie.titleMovie).
+                                putExtra(DetailActivityFragment.POSTER_KEY, movie.posterMovie).
+                                putExtra(DetailActivityFragment.RELEASE_KEY, movie.releaseDate).
+                                putExtra(DetailActivityFragment.RATING_KEY, movie.ratingMovie).
+                                putExtra(DetailActivityFragment.PLOT_KEY, movie.plotMovie);
+                                startActivity(sendIntent);
 
 
 

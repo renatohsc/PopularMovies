@@ -4,19 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
 
-    public static final String TITLE_KEY = "titleMovie";
-    public static final String POSTER_KEY = "posterMovie";
-    public static final String RELEASE_KEY = "releaseDate";
-    public static final String RATING_KEY = "ratingMovie";
-    public static final String PLOT_KEY = "plotMovie";
+
 
 
 
@@ -25,50 +17,35 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        String titleMovie = getIntent().getExtras().getString(TITLE_KEY);
-        String posterMovie = getIntent().getExtras().getString(POSTER_KEY);
-        String releaseDate = getIntent().getExtras().getString(RELEASE_KEY);
+        if (savedInstanceState == null) {
 
-        String releaseYear = "";
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
 
-        releaseYear = releaseDate.substring( 0, 4 );
+            Bundle arguments = new Bundle();
+            arguments.putInt(DetailActivityFragment.ID_KEY,
+                    getIntent().getIntExtra(DetailActivityFragment.ID_KEY, 0));
+            arguments.putString(DetailActivityFragment.TITLE_KEY,
+                    getIntent().getStringExtra(DetailActivityFragment.TITLE_KEY));
+            arguments.putString(DetailActivityFragment.POSTER_KEY,
+                    getIntent().getStringExtra(DetailActivityFragment.POSTER_KEY));
+            arguments.putString(DetailActivityFragment.RELEASE_KEY,
+                    getIntent().getStringExtra(DetailActivityFragment.RELEASE_KEY));
+            arguments.putString(DetailActivityFragment.RATING_KEY,
+                    getIntent().getStringExtra(DetailActivityFragment.RATING_KEY));
 
-        String ratingMovie = getIntent().getExtras().getString(RATING_KEY) + "/10";
-        String plotMovie = getIntent().getExtras().getString(PLOT_KEY);
+            arguments.putString(DetailActivityFragment.PLOT_KEY,
+                    getIntent().getStringExtra(DetailActivityFragment.PLOT_KEY));
 
-        TextView titleView = (TextView) findViewById(R.id.titleMovie);
-        TextView dateView = (TextView) findViewById(R.id.releaseDate);
-        TextView ratingView = (TextView) findViewById(R.id.ratingMovie);
-        ImageView posterView = (ImageView) findViewById(R.id.posterMovie);
-        TextView plotTextView = (TextView) findViewById(R.id.plotMovie);
-
-
-
-
-        String sizeImage = getApplicationContext().getResources().getString(R.string.size_image);
-        //String sizeImage = "w185";
-        if(posterMovie != null) {
-            String posterUrl = "http://image.tmdb.org/t/p/" + sizeImage + "/" + posterMovie;
-           // Log.v(LOG_TAG, "poster url : " + posterUrl);
-            Picasso.with(this)
-                    .load(posterUrl)
-                    .resize(500, 750)
-                            //    .fit()
-                    .into(posterView);
-        } else {
-
-            posterView.setImageResource(R.mipmap.ic_launcher);
+            DetailActivityFragment fragment = new DetailActivityFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.movie_detail_container, fragment)
+                    .commit();
         }
-
-
-
-
-        titleView.setText(titleMovie);
-        dateView.setText(releaseYear);
-        ratingView.setText(ratingMovie);
-        plotTextView.setText(plotMovie);
-
     }
+
+
 
 
     @Override

@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class MovieMinutia implements Parcelable {
 
+    public int idMovie;
     String titleMovie;
     String posterMovie;
     String releaseDate;
@@ -15,8 +16,9 @@ public class MovieMinutia implements Parcelable {
     String plotMovie;
 
 
-    public MovieMinutia(String vtitleMovie, String vposterMovie, String vreleaseDate, String vratingMovie, String vplotMovie)
+    public MovieMinutia(int vidMovie,String vtitleMovie, String vposterMovie, String vreleaseDate, String vratingMovie, String vplotMovie)
     {
+        this.idMovie = vidMovie;
         this.titleMovie = vtitleMovie;
         this.posterMovie = vposterMovie;
         this.releaseDate = vreleaseDate;
@@ -25,6 +27,7 @@ public class MovieMinutia implements Parcelable {
     }
 
     private MovieMinutia(Parcel in) {
+        idMovie = in.readInt();
         titleMovie = in.readString();
         posterMovie = in.readString();
         releaseDate = in.readString();
@@ -43,6 +46,7 @@ public class MovieMinutia implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(idMovie);
         parcel.writeString(titleMovie);
         parcel.writeString(posterMovie);
         parcel.writeString(releaseDate);

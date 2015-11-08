@@ -14,11 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/activity_width_grid"
+        android:height="@dimen/activity_height_grid"
         android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/abc_switch_padding"
-        android:horizontalSpacing="@dimen/abc_switch_padding"
+        android:verticalSpacing="@dimen/activity_spacing_grid"
+        android:horizontalSpacing="@dimen/activity_spacing_grid"
+        android:padding="@dimen/activity_spacing_grid"
         android:stretchMode="columnWidth"
         android:gravity="center"
+        android:drawSelectorOnTop="true"
+
 
        />
 

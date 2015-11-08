@@ -8,5 +8,9 @@
 
     <!-- Trying a size for the grid -->
     <dimen name="activity_width_grid">130dp</dimen>
+    <dimen name="activity_height_grid">50dp</dimen>
+    <dimen name="activity_spacing_grid">5dp</dimen>
+
+
 
 </resources>
