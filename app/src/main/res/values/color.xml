@@ -2,7 +2,7 @@
 <resources>
 
 
-
+        <color name="custom_teal_light">#B2DFDB</color>
         <!-- green material primary -->
         <color name="custom_teal">#009688</color>
 

@@ -3,7 +3,7 @@
     android:id="@+id/fragment"
     android:name="com.example.android.popularmovies.MainActivityFragment"
     tools:layout="@layout/fragment_main"
-    tools:context="com.example.android.popularmovies.MainActivityFragment"
+    tools:context="com.example.android.popularmovies.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     />

@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -19,7 +20,22 @@
         android:layout_height="@dimen/activity_vertical_height" />
     </FrameLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/favButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="-25dp"
+        android:layout_marginRight="20dp"
+        app:elevation="4dp"
+        app:layout_anchor="@id/title"
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@mipmap/ic_starlight">
+    </android.support.design.widget.FloatingActionButton>
+
     <ScrollView
+        android:id="@+id/movieScrolLView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -69,12 +85,14 @@
                 android:layout_marginBottom="@dimen/abc_action_bar_overflow_padding_end_material" />
 
 
-
             <LinearLayout android:id="@+id/movie_trailers"
                 android:orientation="vertical"
+                android:divider="?android:dividerHorizontal"
+                android:showDividers="beginning|end"
                 android:layout_below="@+id/plotMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:paddingBottom="15dp">
 
                 <TextView
@@ -88,8 +106,12 @@
                     android:text="@string/movietrailer"
                 />
             </LinearLayout>
+
+
             <Button
                 android:id="@+id/show_reviews"
+                android:divider="?android:dividerHorizontal"
+                android:showDividers="beginning|end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/movie_trailers"
@@ -97,6 +119,8 @@
 
             <LinearLayout android:id="@+id/movie_reviews"
                 android:orientation="vertical"
+                android:divider="?android:dividerHorizontal"
+                android:showDividers="beginning|end"
                 android:visibility="gone"
                 android:layout_below="@id/show_reviews"
                 android:layout_width="match_parent"

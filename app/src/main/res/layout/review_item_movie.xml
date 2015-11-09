@@ -9,16 +9,17 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/review_author"
+            android:background="@drawable/review_border"
             android:id="@+id/reviewAuthor" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/review_content"
             android:id="@+id/reviewContent" />
     </LinearLayout>
