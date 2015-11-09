@@ -11,5 +11,11 @@
     </string-array>
 
 
+    <string-array name="pref_sort_order">
+        <item>@string/pref_order_pop</item>
+        <item>@string/pref_order_high</item>
+        <item>@string/pref_order_fav</item>
+    </string-array>
+
 
 </resources>

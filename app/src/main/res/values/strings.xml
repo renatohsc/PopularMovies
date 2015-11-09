@@ -4,6 +4,12 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="action_sort_by">Sort By:</string>
+
+    <string name="action_popular">Most Popular</string>
+    <string name="action_highest">High Rated</string>
+    <string name="action_fav">Favourites</string>
+
     <string name="general_settings">General Settings</string>
     <!-- Image Description for disability Users -->
     <string name="poster_description">Poster</string>
@@ -21,6 +27,16 @@
     <string name="show_reviews">Show Reviews</string>
     <string name="movietrailer">Movie trailers</string>
 
+
+    <!--  key name on SharedPreferences -->
+
+    <string name="arg_order_key" translatable="false">ARG_ORDER_TYPE</string>
+    <string name="arg_order_pref" translatable="false">ARG_ORDER_PREF</string>
+
+
+    <string name="pref_order_pop">0</string>
+    <string name="pref_order_high">1</string>
+    <string name="pref_order_fav">2</string>
 
     <!--  key name on SharedPreferences -->
 

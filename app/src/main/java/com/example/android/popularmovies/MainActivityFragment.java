@@ -1,15 +1,18 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,6 +41,19 @@ public class MainActivityFragment extends Fragment {
 
 
     private final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+
+    private static final String MOST_POP = "popularity.desc";
+    private static final String HIGH_RATED = "vote_average.desc";
+
+    private static final String MAINFRAGMENT_TAG = "MATAG";
+
+    public final static String ARG_ORDER_TYPE = "ARG_ORDER_TYPE";
+
+    public final static String TYPE_SORT = "0";
+
+    public final static String TYPE_POP = "0";
+    public final static String TYPE_RATED = "1";
+    public final static String  TYPE_FAV = "2";
 
 
     private GridView gridMovie;
@@ -71,10 +87,11 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 //        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
+     //   updateOrder(TYPE_POP);
+        Log.v(LOG_TAG, "Maldicao executavel 111");
     }
-
     public MainActivityFragment() {
+        Log.v(LOG_TAG, "Maldicao executavel 70");
     }
 
 
@@ -85,39 +102,150 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        if(savedInstanceState == null || !savedInstanceState.containsKey(MAINFRAGMENT_TAG)) {
+        mProgress = (ProgressBar) rootView.findViewById(R.id.progress_loading);
+        Log.v(LOG_TAG, "Maldicao executavel 555");
+
+        mProgress.setVisibility(View.VISIBLE);
+
+        Log.v(LOG_TAG, "Maldicao executavel 566");
+        textProgress = (TextView) rootView.findViewById(R.id.text_loading);
+
+        Log.v(LOG_TAG, "Maldicao executavel 577");
+
+        textProgress.setVisibility(View.VISIBLE);
+
+        Log.v(LOG_TAG, "Maldicao executavel 877");
+
+        gridMovie = (GridView) rootView.findViewById(R.id.gridview_movie);
+
+        gridMovie.setVisibility(View.GONE);
+        Log.v(LOG_TAG, "Maldicao executavel 899");
+
+
+
+            SharedPreferences sharedPrefs =  getActivity().getSharedPreferences(getString(R.string.arg_order_pref), Context.MODE_PRIVATE);
+
+
+            Log.v(LOG_TAG, "Maldicachorro executavel 66u");
+            String sortOrder = "0";
+            if (sharedPrefs != null) {
+                Log.v(LOG_TAG, "Maldicachorro executavel 888");
+                sortOrder  = sharedPrefs.getString(
+                        getActivity().getString(R.string.arg_order_key), getActivity().getString(R.string.pref_order_pop));
+
+            }
+
+            Log.v(LOG_TAG, "Maldicavalo executavel 777" + sortOrder);
+
+            updateOrder(sortOrder);
+
+
+            Log.v(LOG_TAG, "Maldicavalo executavel 888" + sortOrder);
+
+//        int sortOrder  = sharedPrefs.getInt(
+//                ARG_ORDER_TYPE, TYPE_POP);
+//
+//            Log.v(LOG_TAG, "Maldicachorro executavel 666" + getString(sortOrder));
+
+
+           if (sortOrder == TYPE_RATED) {
+
+               Log.v(LOG_TAG, "Maldicavalo execu66" + sortOrder + TYPE_RATED + "w");
+               updateMovies(HIGH_RATED);
+
+            }
+            else {
+               Log.v(LOG_TAG, "Maldicavalo execu644" + sortOrder + TYPE_RATED + "z");
+               updateMovies(MOST_POP);
+
+           }
+        }
+
+        else {
+            movieList = savedInstanceState.getParcelableArrayList(MAINFRAGMENT_TAG);
+            Log.d(LOG_TAG, "MovieList retrieved with size : " + movieList.size());
+        }
+
 
         //minutiaAdapter = new MovieMinutiaAdapter(getActivity(), Arrays.asList(movieList));
 
         // Get a reference to the GridView, and attach this adapter to it.
-        gridMovie = (GridView) rootView.findViewById(R.id.gridview_movie);
-      //  gridView.setAdapter(minutiaAdapter);
 
+        //  gridView.setAdapter(minutiaAdapter);
 
+        setHasOptionsMenu(true);
 
 
         return rootView;
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-    private void updateMovies() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_sort_by) {
+
+        }
+        else {
+
+
+            if (id == R.id.action_sort_by_high_rated) {
+                updateOrder(TYPE_RATED);
+                updateMovies(HIGH_RATED);
+            } else {
+                updateOrder(TYPE_POP);
+                updateMovies(MOST_POP);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateOrder(String type){
+//        SharedPreferences sharedPrefs =
+//                     PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences sharedPrefs = getActivity().getSharedPreferences(getString(R.string.arg_order_pref), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(ARG_ORDER_TYPE, type);
+        editor.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(MAINFRAGMENT_TAG, movieList);
+    }
+
+    private void updateMovies(String sortCriteria) {
 
 
        // Log.v(LOG_TAG, "Maldicao executavel 2");
 
 
 
-        SharedPreferences sharedPrefs =
-                PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        SharedPreferences sharedPrefs =
+//                PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String sortOrder  = sharedPrefs.getString(
-                getString(R.string.pref_sort_key),
-                getString(R.string.pref_sort_pop));
+//        String sortOrder  = sharedPrefs.getString(
+//                getString(R.string.pref_sort_key),
+//                getString(R.string.pref_sort_pop));
 
         String sortLabel = " " ;
 
 
-        if (sortOrder == getString(R.string.pref_sort_high)) {
+        if (sortCriteria == HIGH_RATED) {
             sortLabel = getString(R.string.pref_sort_label_highest);
             Log.v(LOG_TAG, "Maldicao executavel 10");
         }
@@ -129,25 +257,18 @@ public class MainActivityFragment extends Fragment {
 
         getActivity().setTitle(sortLabel);
 
-         Log.v(LOG_TAG, "Maldicao executavel 1" + sortOrder);
+         Log.v(LOG_TAG, "Maldicao executavel 1" + sortCriteria);
 
          Log.v(LOG_TAG, "Maldicao executavel 2" + getString(R.string.pref_sort_high));
 
          Log.v(LOG_TAG, "Maldicao executavel 3" + sortLabel);
 
 
-        mProgress = (ProgressBar) getActivity().findViewById(R.id.progress_loading);
-
-        mProgress.setVisibility(View.VISIBLE);
-
-        textProgress = (TextView) getActivity().findViewById(R.id.text_loading);
-
-        textProgress.setVisibility(View.VISIBLE);
 
 
-        gridMovie.setVisibility(View.GONE);
 
 
+        Log.v(LOG_TAG, "Maldicao executavel 98877");
         // Start lengthy operation in a background thread
         new Thread(new Runnable() {
             public void run() {
@@ -177,24 +298,24 @@ public class MainActivityFragment extends Fragment {
                 }
             }
         }).start();
-
+        Log.v(LOG_TAG, "Maldicao executavel 40");
 
         FetchMovieTask moviesTask = new FetchMovieTask();
-        moviesTask.execute(sortOrder);
-
+        moviesTask.execute(sortCriteria);
+        Log.v(LOG_TAG, "Maldicao executavel 50");
 
 
 
     }
 
+
     @Override
     public void onStart() {
 
         super.onStart();
-
+        Log.v(LOG_TAG, "Maldicao executavel 30");
        // Log.v(LOG_TAG, "Maldicao executavel 1");
 
-        updateMovies();
 
     }
 

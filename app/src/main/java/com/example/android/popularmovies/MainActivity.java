@@ -1,18 +1,19 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity  implements MainActivityFragment.Callback {
 
-   // private final String LOG_TAG = MainActivity.class.getSimpleName();
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    public final static String ARG_ORDER_TYPE = "ARG_ORDER_TYPE";
 
-
+    public final static int TYPE_POP = 0;
 
     public boolean mTwoPane;
 
@@ -21,41 +22,31 @@ public class MainActivity extends AppCompatActivity  implements MainActivityFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.v(LOG_TAG, "Maldicao executavel 33");
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then the activity should be
             // in two-pane mode.
+            Log.v(LOG_TAG, "Maldigato executavel 43");
             mTwoPane = true;
         } else {
+            Log.v(LOG_TAG, "Maldigato executavel 58");
             mTwoPane = false;
         }
+
+     //   initOrder();
+        Log.v(LOG_TAG, "Maldicao executavel 43");
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void initOrder(){
+       // SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(ARG_ORDER_TYPE, TYPE_POP);
+        editor.commit();
+
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
 
     @Override
@@ -64,6 +55,7 @@ public class MainActivity extends AppCompatActivity  implements MainActivityFrag
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
+            Log.v(LOG_TAG, "Maldicao executavel 53");
             Bundle arguments = new Bundle();
             arguments.putInt(DetailActivityFragment.ID_KEY, id);
             arguments.putString(DetailActivityFragment.TITLE_KEY, title);
@@ -81,7 +73,7 @@ public class MainActivity extends AppCompatActivity  implements MainActivityFrag
 
         } else {
             // In single-pane mode,
-
+            Log.v(LOG_TAG, "Maldicao executavel 55");
             Intent intent = new Intent(getApplicationContext(), DetailActivityFragment.class);
             intent.putExtra(DetailActivityFragment.ID_KEY,id);
             intent.putExtra(DetailActivityFragment.TITLE_KEY, title);
@@ -112,7 +104,7 @@ public class MainActivity extends AppCompatActivity  implements MainActivityFrag
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, fragment)
                     .commit();
-
+            Log.v(LOG_TAG, "Maldicao executavel 22");
 
 
         }
